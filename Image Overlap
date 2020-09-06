@@ -1,0 +1,77 @@
+class Solution {
+public:
+    int largestOverlap(vector<vector<int>>& A, vector<vector<int>>& B) {
+        
+        vector<vector<int> > pos(A.size(), vector(A.size(),0));
+        vector<vector<int> > neg(A.size(), vector(A.size(),0));
+        vector<vector<int> > pos_neg(A.size(), vector(A.size(),0));
+        vector<vector<int> > neg_pos(A.size(), vector(A.size(),0));
+        
+        vector< pair<int,int> > v1;
+        vector< pair<int,int> > v2;
+        
+        for(int i=0;i<A.size();i++)
+        {
+            for(int j=0;j<A[0].size();j++)
+            {
+                if(A[i][j]==1)
+                    v1.push_back(make_pair(i,j));
+            }
+        }
+        for(int i=0;i<B.size();i++)
+        {
+            for(int j=0;j<B[0].size();j++)
+            {
+                if(B[i][j]==1)
+                    v2.push_back(make_pair(i,j));
+            }
+        }
+        int ans=0;
+        for(int i=0;i<v1.size();i++)
+        {
+            for(int j=0;j<v2.size();j++)
+            {
+                int x = v1[i].first - v2[j].first;
+                int y = v1[i].second - v2[j].second;
+                
+                if(x==0 && y==0)
+                {
+                    pos[x][y]++ ;
+                    neg[abs(x)][abs(y)]++ ;
+                    neg_pos[abs(x)][y]++; 
+                    pos_neg[x][abs(y)]++;
+                    ans=max(ans,pos[x][y]);
+                    ans=max(ans,neg[abs(x)][abs(y)]);
+                    ans=max(ans,neg_pos[abs(x)][y]);
+                    ans=max(ans,pos_neg[x][abs(y)]);
+                    continue;
+                }
+                
+                if(x>=0 && y>=0)
+                {
+                    pos[x][y]++ ;
+                    ans=max(ans,pos[x][y]);
+                }
+                else if(x<=0 && y<=0)
+                {
+                    neg[abs(x)][abs(y)]++ ;
+                    ans=max(ans,neg[abs(x)][abs(y)]);
+                }
+                else if(x<=0 && y>=0 )
+                {
+                     neg_pos[abs(x)][y]++ ;
+                     ans=max(ans,neg_pos[abs(x)][y]);
+                }
+                else
+                {
+                     pos_neg[x][abs(y)]++ ;
+                     ans=max(ans,pos_neg[x][abs(y)]);
+                }
+                
+            }
+        }
+        
+        
+        return ans;
+    }
+};
