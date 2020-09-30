@@ -1,0 +1,59 @@
+class Solution {
+public:
+    bool isRobotBounded(string instructions) {
+        
+        int x=0;
+        int y=0;
+        int k= instructions.size();
+        char c='N';
+        int n=4;
+        
+        while(n>0)
+        {
+        for(int i=0;i<k;i++)
+        {
+            if(instructions[i]=='G')
+            {
+                if(c=='N')
+                    y++;
+                else if(c=='S')
+                    y--;
+                else if(c=='E')
+                    x++;
+                else if(c=='W')
+                    x--;
+            }
+            else if(instructions[i]=='L')
+            {
+                if(c=='N')
+                    c='W';
+                else if(c=='W')
+                    c='S';
+                else if(c=='S')
+                    c='E';
+                else if(c=='E')
+                    c='N';
+            }
+            else if(instructions[i]=='R')
+            {
+                if(c=='N')
+                    c='E';
+                else if(c=='E')
+                    c='S';
+                else if(c=='S')
+                    c='W';
+                else if(c=='W')
+                    c='N';
+            }
+
+        }
+            if(x==0 && y==0)
+                return true;
+             
+     n--;   
+    }
+        
+        
+        return false;
+    }
+};
