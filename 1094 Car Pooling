@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        
+        int n = trips.size();
+        
+        int arr[1005];
+        
+        memset(arr,0,sizeof(arr));
+        
+        if(n==0)
+            return true;
+        int indx =0 ;
+        
+        for(int i=0; i < n ; i++)
+        {
+            int start = trips[i][1];
+            int end = trips[i][2];
+            int people = trips[i][0];
+            
+            indx = max(indx,end);
+            
+            if(people > capacity)
+                return false;
+            
+            arr[start] += people;
+            arr[end] -= people;
+            
+        }
+        
+        for(int i=1;i<indx+2 ; i++)
+        {
+            
+            arr[i]= arr[i] + arr[i-1];
+            
+            if(arr[i] > capacity)
+                    return false;
+            
+        }
+      
+        
+        return true;
+    }
+};
