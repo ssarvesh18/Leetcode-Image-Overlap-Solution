@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void fn(vector<int> v,int sm,int n,int k,int i,vector<vector<int> > &vv)
+    {
+        if(k==0 && sm==n)
+        {
+            vv.push_back(v);
+            return;
+        }
+        
+        if(sm>n || k==0)
+            return;
+        
+        if(i > 9)
+            return;
+      
+        v.push_back(i);
+        
+        fn(v,sm+i,n,k-1,i+1,vv);
+        
+        v.pop_back();
+        
+        fn(v,sm,n,k,i+1,vv);
+        
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int> > vv;
+        vector<int> v;
+        vector<int> num(9,0);
+        
+        if(n==0 || k==0)
+            return vv;
+
+        fn(v,0,n,k,1,vv);
+        
+        return vv;
+    }
+};
