@@ -1,0 +1,84 @@
+class Solution {
+public:
+    struct trie{
+        
+        struct trie* left = NULL;
+        struct trie* right = NULL;
+    };
+    
+    void insert(int x,struct trie* head)
+    {
+    
+    
+    struct trie* curr=head;
+        
+     for(int i=31;i>=0;i--)
+     {
+         int b = (x>>i & 1);
+         
+         if(b==0)
+         {
+             if(curr->left == NULL)
+                 curr->left = new struct trie();
+             curr = curr->left;
+         }
+         else
+         {
+             if(curr->right == NULL)
+                 curr->right =  new struct trie();
+             curr = curr->right;
+         }
+     }
+        
+    }
+    
+    int findMaximumXOR(vector<int>& nums) {
+     
+        int n = nums.size();
+        
+        struct trie* head = new struct trie();
+        
+        int mx=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            insert(nums[i],head);
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            struct trie* curr =head;
+            int k = nums[i];
+            int curr_xor=0;
+            
+            for(int j=31;j>= 0;j--)
+            {
+                int b = (k>>j) & 1;
+                
+                if(b==0)
+                {
+                    if(curr->right!=NULL)
+                    {
+                        curr_xor += pow(2,j);
+                        curr=curr->right;
+                    }
+                    else
+                        curr=curr->left;
+                }
+                else   
+                {
+                    if(curr->left!=NULL)
+                    {
+                        curr_xor += pow(2,j);
+                        curr=curr->left; 
+                    }
+                    else
+                        curr=curr->right;
+                }
+                
+            }
+            mx = max(curr_xor,mx);
+        }
+        return mx;
+    }
+};
