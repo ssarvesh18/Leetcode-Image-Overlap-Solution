@@ -1,0 +1,21 @@
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        
+        int n = t.size();
+        
+        if(s.size()==0)
+            return t[0];
+        
+        int x =t[0];
+        
+        for(int i=1;i<n ;i++)
+        {
+            x= x^ (int)t[i] ^ (int)s[i-1];
+        }
+        
+        return (char)x;
+        
+        
+    }
+};
