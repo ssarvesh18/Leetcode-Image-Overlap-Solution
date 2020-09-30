@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        
+        int n= S.size();
+        vector<int> v;
+        vector<pair<int,int> > st;
+        stack<pair<int,int> > sp;
+        
+        unordered_map<char,pair<int,int>> um;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(um.find(S[i])==um.end())
+            {
+                um[S[i]].first = i;
+                um[S[i]].second =i;
+            }
+            else
+            {
+                um[S[i]].second= i;
+            }
+        }
+        
+        for(auto itr=um.begin();itr!=um.end();itr++)
+        {
+            st.push_back(make_pair(itr->second.first,itr->second.second));
+        }
+        
+        sort(st.begin(),st.end());
+        
+        for(int i=0;i<st.size();i++)
+        {
+            if(sp.empty())
+                sp.push(st[i]);
+            else
+            {
+                if(sp.top().second >= st[i].first)
+                {
+                    pair<int,int> pp=sp.top();
+                    sp.pop();
+                    pp.second = max(pp.second , st[i].second);
+                    sp.push(pp);
+                }
+                else
+                    sp.push(st[i]);
+            }
+        }
+        while(!sp.empty())
+        {
+            pair<int,int> pp=sp.top();
+            v.push_back(pp.second-pp.first+1);
+            sp.pop();
+        }
+        reverse(v.begin(),v.end());
+        return v;
+    }
+};
