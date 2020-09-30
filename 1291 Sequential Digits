@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        
+        
+        int len=0;
+        int start=0;
+        int k= low ;
+        int step =0;
+        vector<int> ans;
+        while(k > 0)
+        {
+            k/=10;
+            len++;
+        }
+        for(int i=1;i<=len;i++)
+        {
+            start = start*10 + i;
+            
+            step = step *10 +1;
+        }
+        int val= start;
+        while(val < low)
+        {
+            if(val %10 == 9)
+            {
+                start = start*10 + ++len;
+                val =start;
+                step = step*10 + 1;
+            }
+            else
+                val+= step;
+        }
+        
+        while(val <= high)
+        {
+            
+            ans.push_back(val);
+             if(val %10 == 9)
+            {
+                start = start*10 + ++len;
+                val =start;
+                step = step*10 +1 ;
+            }
+            else
+                val+= step;
+            
+        }
+        return ans;
+    }
+};
