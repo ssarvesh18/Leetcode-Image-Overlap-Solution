@@ -1,0 +1,42 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        unordered_map<char,string> um;
+        unordered_map<string,int> check;
+        vector<string> v;
+        string f="";
+        for(int i=0;i<str.size();i++)
+        {
+            if(str[i]!=' ')
+                f+=str[i];
+            else
+            {
+                v.push_back(f);
+                f="";
+            }
+        }
+        
+        v.push_back(f);
+        cout<<v.size()<<" "<<pattern.size()<<endl;
+        
+        if(v.size()!= pattern.size())
+            return false;
+        
+        for(int i=0;i< pattern.size();i++)
+        {
+            if(um.find(pattern[i])==um.end() && check.find(v[i])==check.end())
+            {
+                um[pattern[i]]=v[i];
+                check[v[i]]++;
+            }
+            else if(um[pattern[i]].compare(v[i])==0 )
+            {
+                cout<<um[pattern[i]]<<" ";
+                continue;
+            } 
+            else
+                return false;
+        }
+        return true;
+    }
+};
