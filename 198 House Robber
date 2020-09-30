@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int dp[2][100000];
+    
+    int booty(vector<int> &nums,int i,int n,int prev)
+    {
+        if(i> n-1)
+            return 0;
+        
+        if(dp[prev][i]!=-1)
+            return dp[prev][i];
+        
+        if(prev==0)
+            dp[prev][i]=max(nums[i]+booty(nums,i+1,n,1),booty(nums,i+1,n,0));
+        else
+            dp[prev][i]= booty(nums,i+1,n,0);
+        
+        return dp[prev][i];
+    }
+    
+    int rob(vector<int>& nums) {
+        
+        memset(dp,-1,sizeof(dp));
+        return booty(nums,0,nums.size(),0);
+    }
+};
