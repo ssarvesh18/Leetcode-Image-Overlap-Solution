@@ -1,0 +1,39 @@
+  bool cmp(string x,string y)
+    {
+        if(x+y >= y+x)
+            return true;
+        return false;
+    }
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        
+        int n= nums.size();
+        int i=0;
+        
+        vector<string> v;
+        int cnt=0;
+        
+        while(i<n)
+        {
+            if(nums[i]==0)
+                cnt++;
+            v.push_back(to_string(nums[i++]));
+        }
+        
+        if(cnt==n)
+            return "0";
+        sort(v.begin(),v.end(),cmp);
+        
+        string s="";
+        
+        i=0;
+      
+        while(i<n)
+        {
+            s+= v[i++];
+        }
+        
+        return s;
+    }
+};
