@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int dp[100000];
+    bool fn(string s,int i,int n,unordered_map<string,int> um)
+    {
+        if(dp[i]!=-1)
+            return dp[i];
+        
+        if(i==n+1)
+            return dp[i]=true;
+        
+        bool b=false;
+        
+        dp[i]=0;
+        
+        
+        string temp="";
+        
+        for(int k=i;k<=n;k++)
+        {
+            temp+=s[k];
+            b = b || ( um.find(temp)!= um.end() && fn(s,k+1,n,um)) ;
+            if(b== true)
+                return dp[i]=1;
+        }
+        return dp[i];
+    }
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        memset(dp,-1,sizeof(dp));
+        unordered_map<string,int> um;
+        int n= s.size();
+        for(int i=0;i< wordDict.size();i++)
+        {
+            um[wordDict[i]]++;
+        }
+        
+        return fn(s,0,n-1,um);
+    }
+};
