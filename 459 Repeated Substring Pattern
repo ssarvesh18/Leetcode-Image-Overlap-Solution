@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        int n= s.size();
+        
+        if(n<=1)
+            return false;
+        
+        int k=0;
+        
+        vector<string> v;
+        
+        string f="";
+        
+        for(int i=0;i<n/2;i++)
+        {
+            f+=s[i];
+            if(s.size()%f.size() == 0)
+                v.push_back(f);
+        }
+        
+        for(int i=0;i<v.size();i++)
+        {
+            f="";
+            for(int j=0;j< s.size()/v[i].size();j++)
+            {
+                f+=v[i];
+            }
+            if(f.compare(s)==0)
+                return true;
+        }
+        
+        
+        return false;
+    }
+};
